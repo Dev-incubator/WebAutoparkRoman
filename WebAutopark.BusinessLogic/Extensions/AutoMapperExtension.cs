@@ -12,7 +12,7 @@ namespace WebAutopark.BusinessLogic.Extensions
 {
     public static class AutoMapperExtension
     {
-        public static void AddMapper(this IServiceCollection services)
+        public static void AddMapperForDto(this IServiceCollection services)
         {
             services.AddAutoMapper(cfg =>
             {
@@ -21,6 +21,10 @@ namespace WebAutopark.BusinessLogic.Extensions
                 cfg.CreateMap<OrderPart, OrderPartDto>().ReverseMap();
                 cfg.CreateMap<VehicleType, VehicleTypeDto>().ReverseMap();
                 cfg.CreateMap<Vehicle, VehicleDto>().ReverseMap();
+                cfg.CreateMap<Order, DetaildOrderDto>().ReverseMap();
+                cfg.CreateMap<OrderPart, DetaildOrderPartDto>()
+                .ForMember(dest => dest.PartName, act => act.MapFrom(src => src.Part.PartName))
+                .ReverseMap();
             });
         }
     }

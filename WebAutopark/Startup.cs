@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebAutopark.DataAccess.Extensions;
+using WebAutopark.BusinessLogic.Extensions;
+using WebAutopark.Extensions;
 
 namespace WebAutopark
 {
@@ -23,6 +26,10 @@ namespace WebAutopark
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDataAccess(Configuration.GetConnectionString("Azure"));
+            services.AddBusinessLogic();
+            services.AddMapperForDto();
+            services.AddMapperForViewModels();
             services.AddControllersWithViews();
         }
 
